@@ -1,4 +1,4 @@
-package dittodining.api_server.entity;
+package dittodining.api_server.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
