@@ -24,7 +24,8 @@ import java.util.List;
 })
 public class Restaurant extends BaseTimeEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id")
     private Long id;
 
