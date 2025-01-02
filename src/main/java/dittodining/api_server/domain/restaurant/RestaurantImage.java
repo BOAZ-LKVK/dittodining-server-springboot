@@ -17,13 +17,21 @@ import org.hibernate.annotations.Comment;
 public class RestaurantImage extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Comment(value = "음식점 ID")
+    @Comment(value = "음식점 이미지 ID")
     @Column(name = "restaurant_image_id")
     private Long id;
+
+    @Comment(value = "음식점 ID") // 왜 DDL 에는 PK를 넣지 않았지?
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "restaurant_id")
+    private Long restaurantId;
 
     @Size(max = 1024)
     @Comment(value = "이미지 URL")
     private String imageUrl;
 
-    public RestaurantImage(String imageUrl) { this.imageUrl = imageUrl; }
+    public RestaurantImage(Long restaurantId, String imageUrl) {
+        this.restaurantId = restaurantId;
+        this.imageUrl = imageUrl;
+    }
 }
