@@ -14,6 +14,11 @@ import java.math.BigDecimal;
 @Entity
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
+@Table(indexes = {
+        @Index(name = "idx_restaurant_menu_m1", columnList = "created_at"),
+        @Index(name = "idx_restaurant_menu_m2", columnList = "updated_at"),
+        @Index(name = "idx_restaurant_menu_m3", columnList = "restaurant_id")
+})
 public class RestaurantMenu {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
