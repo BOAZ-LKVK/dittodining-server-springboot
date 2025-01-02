@@ -1,0 +1,61 @@
+package dittodining.api_server.domain.restaurant;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.Comment;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Table(indexes = {
+        @Index(name = "idx_restaurant_menu_m1", columnList = "created_at"),
+        @Index(name = "idx_restaurant_menu_m2", columnList = "updated_at"),
+        @Index(name = "idx_restaurant_menu_m3", columnList = "restaurant_id")
+})
+public class RestaurantReview {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "restaurant_review_id")
+    private Long id;
+
+    @NotNull
+    @Comment(value = "음식점 ID")
+    private Long restaurantId;
+
+    @Size(max = 255)
+    @Comment(value = "작성자 이름")
+    private String writerName;
+
+    @Column(precision = 5, scale = 2)
+    @Comment(value = "평점")
+    private BigDecimal score;
+
+    @Lob
+    @Comment(value = "내용")
+    private String content;
+
+    @Comment(value = "작성 일시")
+    private LocalDateTime wroteAt;
+
+    public RestaurantReview(
+            Long restaurantId,
+            String writerName,
+            BigDecimal score,
+            String content,
+            LocalDateTime wroteAt
+    ) {
+        this.restaurantId = restaurantId;
+        this.writerName = writerName;
+        this.score = score;
+        this.content = content;
+        this.wroteAt = wroteAt;
+    }
+}
