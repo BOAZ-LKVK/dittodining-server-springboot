@@ -4,17 +4,24 @@ import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED) @ToString(callSuper = true)
+@Table(indexes = {
+        @Index(name = "idx_restaurant_m1", columnList = "created_at"),
+        @Index(name = "idx_restaurant_m2", columnList = "updated_at"),
+        @Index(name = "idx_restaurant_m3", columnList = "latitude, longitude, recommendation_score"),
+        @Index(name = "idx_restaurant_m4", columnList = "recommendation_score"),
+})
 public class Restaurant extends BaseTimeEntity {
 
     @Id @GeneratedValue
@@ -36,11 +43,18 @@ public class Restaurant extends BaseTimeEntity {
     @Column(precision = 11, scale = 2) @Comment(value = "min price per person")
     private BigDecimal minimumPricePerPerson;
 
+    @Column(precision = 11, scale = 8) @Comment(value = "위도")
+    private BigDecimal latitude;
+
+    @Column(precision = 11, scale = 8) @Comment(value = "경도")
+    private BigDecimal longitude;
+    // 곧 이걸로 리팩토링 예정
     @Column(columnDefinition = "POINT SRID 4326") @Comment(value = "latitude + longitude")
     private Point location;
 
     @Column(name = "business_hours_json", columnDefinition = "JSON")
-    @JdbcTypeCode(SqlTypes.JSON_ARRAY) @Comment(value = "business hour list Json")
+    @Comment(value = "business hour list Json")
+    @Convert(converter = BusinessHourConverter.class)
     private List<BusinessHour> businessHours;
 
     @Column(precision = 5, scale = 2) @Comment(value = "recommendation score")
@@ -60,4 +74,38 @@ public class Restaurant extends BaseTimeEntity {
 
     @Comment(value = "total review count")
     private Long totalReviewCount;
+
+    public Restaurant(
+            String name,
+            String address,
+            String description,
+            BigDecimal maximumPricePerPerson,
+            BigDecimal minimumPricePerPerson,
+            BigDecimal latitude,
+            BigDecimal longitude,
+//            Point location,
+            List<BusinessHour> businessHours,
+            BigDecimal recommendationScore,
+            BigDecimal naverAvgScore,
+            Long naverTotalReviewCount,
+            BigDecimal kakaoAvgScore,
+            Long kakaoTotalReviewCount,
+            Long totalReviewCount
+    ) {
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.maximumPricePerPerson = maximumPricePerPerson;
+        this.minimumPricePerPerson = minimumPricePerPerson;
+        this.latitude = latitude;
+        this.longitude = longitude;
+//        this.location = location;
+        this.businessHours = businessHours;
+        this.recommendationScore = recommendationScore;
+        this.naverAvgScore = naverAvgScore;
+        this.naverTotalReviewCount = naverTotalReviewCount;
+        this.kakaoAvgScore = kakaoAvgScore;
+        this.kakaoTotalReviewCount = kakaoTotalReviewCount;
+        this.totalReviewCount = totalReviewCount;
+    }
 }
