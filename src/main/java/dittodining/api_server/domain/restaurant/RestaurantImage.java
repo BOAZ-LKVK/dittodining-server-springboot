@@ -2,6 +2,7 @@ package dittodining.api_server.domain.restaurant;
 
 import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -21,12 +22,13 @@ public class RestaurantImage extends BaseTimeEntity {
     @Column(name = "restaurant_image_id")
     private Long id;
 
+    @NotNull
     @Comment(value = "음식점 ID") // 왜 DDL 에는 PK를 넣지 않았지?
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "restaurant_id")
     private Long restaurantId;
 
-    @Size(max = 1024)
+    @NotNull @Size(max = 1024)
     @Comment(value = "이미지 URL")
     private String imageUrl;
 
