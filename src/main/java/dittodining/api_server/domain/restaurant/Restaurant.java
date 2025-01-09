@@ -29,50 +29,75 @@ public class Restaurant extends BaseTimeEntity {
     @Column(name = "restaurant_id")
     private Long id;
 
-    @Size(max = 255) @NotNull @Comment(value = "restaurant ID")
+    @Size(max = 255)
+    @NotNull
+    @Comment(value = "restaurant ID")
     private String name;
 
-    @Size(max = 1024) @NotNull @Comment(value = "restaurant address")
+    @Size(max = 1024)
+    @NotNull
+    @Comment(value = "restaurant address")
     private String address;
 
-    @Lob @Size(max = 65_535) @Comment(value = "restaurant explanation")
+    @Lob
+    @NotNull
+    @Size(max = 65_535)
+    @Comment(value = "restaurant explanation")
     private String description;
 
-    @Column(precision = 11, scale = 2) @Comment(value = "max price per person")
+    @NotNull
+    @Column(precision = 11, scale = 2)
+    @Comment(value = "max price per person")
     private BigDecimal maximumPricePerPerson;
 
-    @Column(precision = 11, scale = 2) @Comment(value = "min price per person")
+    @NotNull
+    @Column(precision = 11, scale = 2)
+    @Comment(value = "min price per person")
     private BigDecimal minimumPricePerPerson;
 
-    @Column(precision = 11, scale = 8) @Comment(value = "위도")
+    @NotNull
+    @Column(precision = 11, scale = 8)
+    @Comment(value = "위도")
     private BigDecimal latitude;
 
-    @Column(precision = 11, scale = 8) @Comment(value = "경도")
+    @NotNull
+    @Column(precision = 11, scale = 8)
+    @Comment(value = "경도")
     private BigDecimal longitude;
     // 곧 이걸로 리팩토링 예정
     @Column(columnDefinition = "POINT SRID 4326") @Comment(value = "latitude + longitude")
     private Point location;
 
+    @NotNull
     @Column(name = "business_hours_json", columnDefinition = "JSON")
     @Comment(value = "business hour list Json")
     @Convert(converter = BusinessHourConverter.class)
     private List<BusinessHour> businessHours;
 
-    @Column(precision = 5, scale = 2) @Comment(value = "recommendation score")
+    @NotNull
+    @Column(precision = 5, scale = 2)
+    @Comment(value = "recommendation score")
     private BigDecimal recommendationScore;
 
-    @Column(name = "average_score_from_naver", precision = 5, scale = 2) @Comment(value = "average score from naver")
+    @Column(name = "average_score_from_naver", precision = 5, scale = 2)
+    @Comment(value = "average score from naver")
     private BigDecimal naverAvgScore;
 
-    @Column(name = "total_review_count_from_naver", precision = 5, scale = 2) @Comment(value = "total review count from Naver")
+    @NotNull
+    @Column(name = "total_review_count_from_naver", precision = 5, scale = 2)
+    @Comment(value = "total review count from Naver")
     private Long naverTotalReviewCount;
 
-    @Column(name = "average_score_from_kakao", precision = 5, scale = 2) @Comment(value = "average score from kakao")
+    @Column(name = "average_score_from_kakao", precision = 5, scale = 2)
+    @Comment(value = "average score from kakao")
     private BigDecimal kakaoAvgScore;
 
-    @Column(name = "total_review_count_from_kakao", precision = 5, scale = 2) @Comment(value = "total review count from kakao")
+    @NotNull
+    @Column(name = "total_review_count_from_kakao", precision = 5, scale = 2)
+    @Comment(value = "total review count from kakao")
     private Long kakaoTotalReviewCount;
 
+    @NotNull
     @Comment(value = "total review count")
     private Long totalReviewCount;
 

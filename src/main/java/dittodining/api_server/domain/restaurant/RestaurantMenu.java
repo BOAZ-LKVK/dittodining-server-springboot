@@ -31,12 +31,13 @@ public class RestaurantMenu {
 //    @JoinColumn(name = "restaurant_id")
     private Long restaurantId;
 
-    @Size(max = 255) @NotNull
+    @NotNull
+    @Size(max = 255)
     @Comment(value = "메뉴 이름")
     private String name;
 
-    @Column(precision = 11, scale = 2)
     @NotNull
+    @Column(precision = 11, scale = 2)
     @Comment(value = "메뉴 가격")
     private BigDecimal price;
 

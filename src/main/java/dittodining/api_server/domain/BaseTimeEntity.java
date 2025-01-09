@@ -3,6 +3,7 @@ package dittodining.api_server.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,10 +16,13 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter @ToString
 public class BaseTimeEntity {
+
+    @NotNull
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @NotNull
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

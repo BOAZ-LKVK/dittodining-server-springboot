@@ -30,6 +30,7 @@ public class RestaurantReview {
     @Comment(value = "음식점 ID")
     private Long restaurantId;
 
+    @NotNull
     @Size(max = 255)
     @Comment(value = "작성자 이름")
     private String writerName;
@@ -42,6 +43,7 @@ public class RestaurantReview {
     @Comment(value = "내용")
     private String content;
 
+    @NotNull
     @Comment(value = "작성 일시")
     private LocalDateTime wroteAt;
 
