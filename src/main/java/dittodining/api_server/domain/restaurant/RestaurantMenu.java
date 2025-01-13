@@ -1,5 +1,6 @@
 package dittodining.api_server.domain.restaurant;
 
+import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +20,7 @@ import java.math.BigDecimal;
         @Index(name = "idx_restaurant_menu_m2", columnList = "updated_at"),
         @Index(name = "idx_restaurant_menu_m3", columnList = "restaurant_id")
 })
-public class RestaurantMenu {
+public class RestaurantMenu extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_menu_id")
