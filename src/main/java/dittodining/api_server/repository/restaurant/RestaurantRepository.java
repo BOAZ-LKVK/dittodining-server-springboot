@@ -3,6 +3,9 @@ package dittodining.api_server.repository.restaurant;
 import dittodining.api_server.domain.restaurant.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
+import java.util.List;
 
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantRepositoryCustomInterface {
+    // where x.id in ?1
+    List<Restaurant> findByIdIn(List<Long> ids);
 }
