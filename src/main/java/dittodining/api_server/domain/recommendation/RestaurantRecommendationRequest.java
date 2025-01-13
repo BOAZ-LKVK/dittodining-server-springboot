@@ -2,15 +2,11 @@ package dittodining.api_server.domain.recommendation;
 
 import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
-
-import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -30,13 +26,6 @@ public class RestaurantRecommendationRequest extends BaseTimeEntity {
     @Comment(value = "사용자 ID")
     private Long userId;
 
-    @NotNull
-    @Column(precision = 11, scale = 8)
-    @Comment(value = "유저 위도")
-    private BigDecimal latitude;
-
-    @NotNull
-    @Column(precision = 11, scale = 8)
-    @Comment(value = "유저 경도")
-    private BigDecimal longitude;
+    @Embedded
+    private UserLocation userLocation;
 }
