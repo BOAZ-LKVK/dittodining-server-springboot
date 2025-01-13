@@ -2,11 +2,14 @@ package dittodining.api_server.domain.recommendation;
 
 import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Comment;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,4 +31,14 @@ public class RestaurantRecommendationRequest extends BaseTimeEntity {
 
     @Embedded
     private UserLocation userLocation;
+
+    @NotNull
+    @Comment(value = "요청 시간")
+    private LocalDateTime requested_at;
+
+    public RestaurantRecommendationRequest(Long userId, UserLocation userLocation, LocalDateTime requested_at) {
+        this.userId = userId;
+        this.userLocation = userLocation;
+        this.requested_at = requested_at;
+    }
 }
