@@ -40,4 +40,10 @@ public class SelectedRestaurantRecommendation extends BaseTimeEntity {
     @NotNull
     @Comment(value = "음식점 ID")
     private Long restaurantId;
+
+    public SelectedRestaurantRecommendation(Long requestId, Long recommendationId, Long restaurantId) {
+        this.requestId = requestId;
+        this.recommendationId = recommendationId;
+        this.restaurantId = restaurantId;
+    }
 }
