@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantRepositoryCustomInterface {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, CustomizedRestaurantRepository {
     // where x.id in ?1
     List<Restaurant> findByIdIn(List<Long> ids);
 }

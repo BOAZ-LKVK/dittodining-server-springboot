@@ -10,10 +10,10 @@ import java.util.List;
 
 import static dittodining.api_server.domain.restaurant.QRestaurant.restaurant;
 
-public class RestaurantRepositoryImpl implements RestaurantRepositoryCustomInterface {
+public class CustomizedRestaurantRepositoryImpl implements CustomizedRestaurantRepository {
     private final JPAQueryFactory queryFactory;
 
-    public RestaurantRepositoryImpl(EntityManager entityManager) {
+    public CustomizedRestaurantRepositoryImpl(EntityManager entityManager) {
         this.queryFactory = new JPAQueryFactory(entityManager);
     }
 
