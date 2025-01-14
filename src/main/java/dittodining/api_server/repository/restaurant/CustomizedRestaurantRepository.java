@@ -5,7 +5,7 @@ import dittodining.api_server.domain.recommendation.UserLocation;
 
 import java.util.List;
 
-public interface RestaurantRepositoryCustomInterface {
+public interface CustomizedRestaurantRepository {
     List<Tuple> findNearbyAllOrderByRecommendationScoreDesc(
             UserLocation userLocation,
             long minute,
