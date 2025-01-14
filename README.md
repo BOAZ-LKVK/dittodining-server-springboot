@@ -1,6 +1,10 @@
 # dittodining-server-springboot
 migration golang server to java springboot server
 
+![image](https://github.com/user-attachments/assets/75cd40db-66f0-4144-9ddd-dce3c87a1e36)  
+
+![image](https://github.com/user-attachments/assets/d63452bf-7aa8-47f0-ad74-9767f84a0947)
+
 
 ## MVC Pattern
 `browser` < DTO > `controller(API)` < Model > `service`(Model 사용) <(DAO - Entity)> `repository` <-> `Database`
