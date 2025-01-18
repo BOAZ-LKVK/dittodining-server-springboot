@@ -30,12 +30,12 @@ public class RestaurantRecommendationRequest extends BaseTimeEntity {
 
     @NotNull
     @Comment(value = "요청 시간")
-    private LocalDateTime requested_at;
+    private LocalDateTime requestedAt;
 
     @Builder
-    public RestaurantRecommendationRequest(Long userId, UserLocation userLocation, LocalDateTime requested_at) {
+    public RestaurantRecommendationRequest(Long userId, UserLocation userLocation, LocalDateTime requestedAt) {
         this.userId = userId;
         this.userLocation = userLocation;
-        this.requested_at = requested_at;
+        this.requestedAt = requestedAt;
     }
 }
