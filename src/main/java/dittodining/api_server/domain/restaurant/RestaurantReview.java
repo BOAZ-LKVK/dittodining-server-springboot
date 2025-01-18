@@ -4,10 +4,7 @@ import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
@@ -48,6 +45,7 @@ public class RestaurantReview extends BaseTimeEntity {
     @Comment(value = "작성 일시")
     private LocalDateTime wroteAt;
 
+    @Builder
     public RestaurantReview(
             Long restaurantId,
             String writerName,

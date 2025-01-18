@@ -4,10 +4,7 @@ import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
@@ -51,6 +48,7 @@ public class RestaurantMenu extends BaseTimeEntity {
     //@OneToOne 메핑을 하면 더 좋지 않을까?
     private String imageUrl;
 
+    @Builder
     public RestaurantMenu(
             Long restaurantId,
             String name,

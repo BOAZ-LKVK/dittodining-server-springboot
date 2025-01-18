@@ -2,13 +2,17 @@ package dittodining.api_server.service.restaurant.model;
 
 import dittodining.api_server.domain.restaurant.BusinessHour;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@ToString
+@Builder
 public class RestaurantModel {
     private Long restaurantId;
     private String restaurantName;

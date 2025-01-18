@@ -3,10 +3,7 @@ package dittodining.api_server.domain.recommendation;
 import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
@@ -42,6 +39,7 @@ public class RestaurantRecommendation extends BaseTimeEntity {
     @Comment(value = "미터 단위 거리")
     private BigDecimal distanceInMeters;
 
+    @Builder
     public RestaurantRecommendation(Long requestId, Long restaurantId, BigDecimal distanceInMeters) {
         this.requestId = requestId;
         this.restaurantId = restaurantId;

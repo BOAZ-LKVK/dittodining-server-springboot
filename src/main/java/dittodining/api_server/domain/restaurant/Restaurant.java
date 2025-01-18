@@ -4,10 +4,7 @@ import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.locationtech.jts.geom.Point;
 
@@ -101,6 +98,7 @@ public class Restaurant extends BaseTimeEntity {
     @Comment(value = "total review count")
     private Long totalReviewCount;
 
+    @Builder
     public Restaurant(
             String name,
             String address,

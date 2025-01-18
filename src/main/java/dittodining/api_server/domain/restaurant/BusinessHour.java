@@ -6,6 +6,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BusinessHour {
     private DayOfWeek dayOfWeekEnum;
     private String openTime;

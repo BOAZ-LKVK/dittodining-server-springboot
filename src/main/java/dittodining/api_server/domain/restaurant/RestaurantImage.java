@@ -32,6 +32,7 @@ public class RestaurantImage extends BaseTimeEntity {
     @Comment(value = "이미지 URL")
     private String imageUrl;
 
+    @Builder
     public RestaurantImage(Long restaurantId, String imageUrl) {
         this.restaurantId = restaurantId;
         this.imageUrl = imageUrl;

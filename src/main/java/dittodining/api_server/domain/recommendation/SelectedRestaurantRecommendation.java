@@ -3,10 +3,7 @@ package dittodining.api_server.domain.recommendation;
 import dittodining.api_server.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Entity
@@ -41,6 +38,7 @@ public class SelectedRestaurantRecommendation extends BaseTimeEntity {
     @Comment(value = "음식점 ID")
     private Long restaurantId;
 
+    @Builder
     public SelectedRestaurantRecommendation(Long requestId, Long recommendationId, Long restaurantId) {
         this.requestId = requestId;
         this.recommendationId = recommendationId;
