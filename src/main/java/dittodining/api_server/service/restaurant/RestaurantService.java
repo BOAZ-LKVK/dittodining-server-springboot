@@ -2,11 +2,13 @@ package dittodining.api_server.service.restaurant;
 
 import dittodining.api_server.domain.restaurant.Restaurant;
 import dittodining.api_server.domain.restaurant.RestaurantImage;
+import dittodining.api_server.domain.restaurant.RestaurantMenu;
+import dittodining.api_server.domain.restaurant.RestaurantReview;
 import dittodining.api_server.repository.restaurant.RestaurantImageRepository;
 import dittodining.api_server.repository.restaurant.RestaurantMenuRepository;
 import dittodining.api_server.repository.restaurant.RestaurantRepository;
 import dittodining.api_server.repository.restaurant.RestaurantReviewRepository;
-import dittodining.api_server.service.restaurant.model.RestaurantModel;
+import dittodining.api_server.service.restaurant.model.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +71,69 @@ public class RestaurantService {
                 restaurant.getBusinessHours(),
                 restaurantImageURLs
         );
+    }
+
+    public List<RestaurantMenuModel> getRestaurantMenuList(Long restaurantId) {
+        List<RestaurantMenu> restaurantMenuList = restaurantMenuRepository.findByRestaurantId(restaurantId);
+        if (restaurantMenuList.isEmpty()) {
+            throw new EntityNotFoundException("Restaurant Menu not found");
+        }
+
+        List<RestaurantMenuModel> restaurantMenuModels = new ArrayList<>();
+        for (RestaurantMenu restaurantMenu : restaurantMenuList) {
+            restaurantMenuModels.add(RestaurantMenuModel.builder()
+                    .restaurantMenuId(restaurantMenu.getRestaurantMenuId())
+                    .imageURL(restaurantMenu.getImageUrl())
+                    .name(restaurantMenu.getName())
+                    .price(restaurantMenu.getPrice())
+                    .description(restaurantMenu.getDescription())
+                    .build()
+            );
+        }
+        return restaurantMenuModels;
+    }
+
+    public RestaurantReviewModel getRestaurantReview(Long restaurantId) {
+        Restaurant restaurant = restaurantRepository
+                .findById(restaurantId)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
+
+        List<RestaurantReview> restaurantReviews = restaurantReviewRepository.findByRestaurantId(restaurantId);
+        if (restaurantReviews.isEmpty()) {
+            throw new EntityNotFoundException("Restaurant Review not found");
+        }
+
+        List<RestaurantReviewItem> restaurantReviewItems = new ArrayList<>(restaurantReviews.size());
+        for (RestaurantReview restaurantReview : restaurantReviews) {
+            restaurantReviewItems.add(RestaurantReviewItem.builder()
+                    .restaurantReviewId(restaurantReview.getRestaurantReviewId())
+                    .writerName(restaurantReview.getWriterName())
+                    .score(restaurantReview.getScore())
+                    .content(restaurantReview.getContent())
+                    .wroteAt(restaurantReview.getWroteAt())
+                    .build()
+            );
+        }
+
+        return RestaurantReviewModel.builder()
+                .statistics(
+                        RestaurantReviewStatistics.builder()
+                                .kakao(
+                                        RestaurantReviewKakaoStatistics.builder()
+                                                .averageScore(restaurant.getKakaoAvgScore())
+                                                .count(restaurant.getKakaoTotalReviewCount())
+                                                .build()
+                                )
+                                .naver(
+                                        RestaurantReviewNaverStatistics.builder()
+                                                .averageScore(restaurant.getNaverAvgScore())
+                                                .count(restaurant.getNaverTotalReviewCount())
+                                                .build()
+                                )
+                                .build()
+                )
+                .reviews(restaurantReviewItems)
+                .totalCount(restaurant.getTotalReviewCount())
+                .build();
     }
 }
