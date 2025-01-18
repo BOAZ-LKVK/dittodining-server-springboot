@@ -46,7 +46,7 @@ class RestaurantRecommendationRequestTest {
 
         restaurantRecommendationRequestRepository.save(restaurantRecommendationRequest);
 
-        RestaurantRecommendationRequest findRestaurantRecommendationRequest = restaurantRecommendationRequestRepository.findById(restaurantRecommendationRequest.getId()).get();
+        RestaurantRecommendationRequest findRestaurantRecommendationRequest = restaurantRecommendationRequestRepository.findById(restaurantRecommendationRequest.getRestaurantRecommendationRequestId()).get();
         assertEquals(restaurantRecommendationRequest, findRestaurantRecommendationRequest);
         System.out.println(findRestaurantRecommendationRequest);
     }

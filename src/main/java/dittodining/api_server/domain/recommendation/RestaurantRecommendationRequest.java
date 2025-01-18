@@ -19,9 +19,8 @@ import java.time.LocalDateTime;
 })
 public class RestaurantRecommendationRequest extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_recommendation_request_id")
     @Comment(value = "음식점 추천 요청 ID")
-    private Long id;
+    private Long restaurantRecommendationRequestId;
 
     @Comment(value = "사용자 ID")
     private Long userId;
