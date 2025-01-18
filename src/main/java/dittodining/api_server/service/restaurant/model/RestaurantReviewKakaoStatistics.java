@@ -7,14 +7,11 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 
-@Getter
 @AllArgsConstructor
 @Builder
+@Getter
 @ToString
-public class RestaurantMenuModel {
-    private Long restaurantMenuId;
-    private String imageURL;
-    private String name;
-    private BigDecimal price;
-    private String description;
+public class RestaurantReviewKakaoStatistics {
+    private BigDecimal averageScore;
+    private Long count;
 }
