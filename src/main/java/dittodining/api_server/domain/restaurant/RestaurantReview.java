@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
 })
 public class RestaurantReview extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_review_id")
-    private Long id;
+    private Long restaurantReviewId;
 
     @NotNull
     @Comment(value = "음식점 ID")

@@ -29,7 +29,7 @@ class RestaurantReviewTest {
         RestaurantReview restaurantReview = em.createQuery(
                 "SELECT rv FROM RestaurantReview rv",
                 RestaurantReview.class
-        ).getResultList().get(0);
+        ).getResultList().getFirst();
         System.out.println(restaurantReview);
     }
 
@@ -46,7 +46,7 @@ class RestaurantReviewTest {
         );
 
         restaurantReviewRepository.save(restaurantReview);
-        RestaurantReview findRestaurantReview = restaurantReviewRepository.findById(restaurantReview.getId()).get();
+        RestaurantReview findRestaurantReview = restaurantReviewRepository.findById(restaurantReview.getRestaurantReviewId()).get();
         assertEquals(restaurantReview, findRestaurantReview);
         System.out.println(findRestaurantReview);
     }
