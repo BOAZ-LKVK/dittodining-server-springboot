@@ -58,7 +58,7 @@ public class RestaurantService {
         }
 
         return new RestaurantModel(
-                restaurant.getId(),
+                restaurant.getRestaurantId(),
                 restaurant.getName(),
                 restaurant.getAddress(),
                 restaurant.getDescription(),

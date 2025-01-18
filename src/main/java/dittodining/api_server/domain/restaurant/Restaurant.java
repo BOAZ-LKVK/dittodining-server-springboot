@@ -23,8 +23,7 @@ public class Restaurant extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_id")
-    private Long id;
+    private Long restaurantId;
 
     @Size(max = 255)
     @NotNull

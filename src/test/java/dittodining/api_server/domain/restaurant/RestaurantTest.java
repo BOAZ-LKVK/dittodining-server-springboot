@@ -54,7 +54,7 @@ class RestaurantTest {
         );
         restaurantRepository.save(restaurant);
 
-        Restaurant findRestaurant = restaurantRepository.findById(restaurant.getId()).get();
+        Restaurant findRestaurant = restaurantRepository.findById(restaurant.getRestaurantId()).get();
         assertEquals(restaurant, findRestaurant);
         System.out.println(org.hibernate.Version.getVersionString());
     }

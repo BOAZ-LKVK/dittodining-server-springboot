@@ -29,13 +29,13 @@ class RestaurantRepositoryTest {
 
     @Test
     public void getByIdList() {
-        List<Restaurant> restaurants = restaurantRepository.findByIdIn(List.of(
+        List<Restaurant> restaurants = restaurantRepository.findByRestaurantIdIn(List.of(
                 1L, 2L, 3L
         ));
         assertEquals(3, restaurants.size());
-        assertEquals(1L, restaurants.get(0).getId());
-        assertEquals(2L, restaurants.get(1).getId());
-        assertEquals(3L, restaurants.get(2).getId());
+        assertEquals(1L, restaurants.get(0).getRestaurantId());
+        assertEquals(2L, restaurants.get(1).getRestaurantId());
+        assertEquals(3L, restaurants.get(2).getRestaurantId());
     }
 
     @Test
