@@ -1,12 +1,13 @@
 package dittodining.api_server.service.restaurant;
 
-import dittodining.api_server.domain.restaurant.BusinessHour;
-import dittodining.api_server.domain.restaurant.DayOfWeek;
-import dittodining.api_server.domain.restaurant.Restaurant;
-import dittodining.api_server.domain.restaurant.RestaurantImage;
+import dittodining.api_server.domain.restaurant.*;
 import dittodining.api_server.repository.restaurant.RestaurantImageRepository;
+import dittodining.api_server.repository.restaurant.RestaurantMenuRepository;
 import dittodining.api_server.repository.restaurant.RestaurantRepository;
+import dittodining.api_server.repository.restaurant.RestaurantReviewRepository;
+import dittodining.api_server.service.restaurant.model.RestaurantMenuModel;
 import dittodining.api_server.service.restaurant.model.RestaurantModel;
+import dittodining.api_server.service.restaurant.model.RestaurantReviewModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +35,20 @@ class RestaurantServiceTest {
     @Mock
     private RestaurantImageRepository restaurantImageRepository;
 
+    @Mock
+    private RestaurantMenuRepository restaurantMenuRepository;
+
+    @Mock
+    private RestaurantReviewRepository restaurantReviewRepository;
+
     @InjectMocks
     private RestaurantService restaurantService;
 
+    // Stub
     private Restaurant restaurant;
     private RestaurantImage restaurantImage;
+    private RestaurantMenu restaurantMenu;
+    private RestaurantReview restaurantReview;
 
     @BeforeEach
     void setUp() {
@@ -68,14 +79,31 @@ class RestaurantServiceTest {
                 .kakaoTotalReviewCount(19L)
                 .totalReviewCount(863L)
                 .build();
+
         restaurantImage = RestaurantImage.builder()
-                .restaurantId(1L)
+                .restaurantId(restaurant.getRestaurantId())
                 .imageUrl("https://pup-review-phinf.pstatic.net/MjAyNDA5MTBfMTMz/MDAxNzI1OTcxNTkyMDAz.rF3qTYh7tYVJsU6t4s_ZD27Px3syzXgQ7ikpuYVe4BMg.LcorDDlrQxLRKuSF4vElpzsiFuFJbu0riPicmWgsrg4g.JPEG/1000008970.jpg.jpg?type=w278_sharpen")
+                .build();
+
+        restaurantMenu = RestaurantMenu.builder()
+                .restaurantId(restaurant.getRestaurantId())
+                .name("채식상 1")
+                .price(BigDecimal.valueOf(53000.00))
+                .description("")
+                .imageUrl("https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221230_132%2F1672359922686QGgfm_JPEG%2F%25C1%25A6%25B8%25F1_%25BE%25F8%25C0%25BD111.jpg")
+                .build();
+
+        restaurantReview = RestaurantReview.builder()
+                .restaurantId(restaurant.getRestaurantId())
+                .writerName("jisung")
+                .score(BigDecimal.valueOf(5.00))
+                .content(null)
+                .wroteAt(LocalDateTime.of(2024, 2, 13, 0, 0, 0))
                 .build();
     }
 
     @Test
-    @DisplayName("레스토랑 정보 조회 성공 테스트")
+    @DisplayName("Successful Restaurant Information Retrieval Test")
     public void getRestaurantTest() {
         //given
         when(restaurantRepository.findById(restaurant.getRestaurantId()))
@@ -100,7 +128,7 @@ class RestaurantServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 레스토랑 조회 예외 발생 테스트")
+    @DisplayName("Exception Test for Non-Existent Restaurant Retrieval")
     public void getRestaurant_WhenNotFound_ExceptionTest(){
         // given
         Long restaurantId = -1L;
@@ -114,7 +142,7 @@ class RestaurantServiceTest {
     }
 
     @Test
-    @DisplayName("레스토랑 이미지가 없는 경우 예외 발생 테스트")
+    @DisplayName("Exception Test When Restaurant Has No Images")
     public void getRestaurant_WhenNoImages_ExceptionTest(){
         //given
         when(restaurantRepository.findById(restaurant.getRestaurantId()))
@@ -125,6 +153,102 @@ class RestaurantServiceTest {
         // when & then
         assertThrows(EntityNotFoundException.class, () ->
                 restaurantService.getRestaurant(restaurant.getRestaurantId())
+        );
+    }
+
+    @Test
+    @DisplayName("Successful Restaurant Menu List Retrieval Test")
+    public void getRestaurantMenuList() {
+        //given
+        when(restaurantMenuRepository.findByRestaurantId(restaurant.getRestaurantId()))
+                .thenReturn(List.of(restaurantMenu));
+        //when
+        List<RestaurantMenuModel> restaurantMenuList = restaurantService.getRestaurantMenuList(restaurant.getRestaurantId());
+
+        //then
+        assertNotEquals(restaurantMenuList.size(), 0);
+        assertEquals(restaurantMenuList.getFirst().getRestaurantMenuId(), restaurantMenu.getRestaurantId());
+        assertEquals(restaurantMenuList.getFirst().getImageURL(), restaurantMenu.getImageUrl());
+        assertEquals(restaurantMenuList.getFirst().getName(), restaurantMenu.getName());
+        assertEquals(restaurantMenuList.getFirst().getPrice(), restaurantMenu.getPrice());
+        assertEquals(restaurantMenuList.getFirst().getDescription(), restaurantMenu.getDescription());
+
+        // verify
+        verify(restaurantMenuRepository).findByRestaurantId(restaurant.getRestaurantId());
+    }
+
+    @Test
+    @DisplayName("Exception Case When Restaurant Has No Menus")
+    public void getRestaurantMenuList_WhenNotFound_ExceptionTest(){
+        //given
+        Long restaurantId = -1L;
+        when(restaurantMenuRepository.findByRestaurantId(restaurantId))
+                .thenReturn(List.of());
+
+        //when & then
+        assertThrows(EntityNotFoundException.class,
+                () -> restaurantService.getRestaurantMenuList(restaurantId)
+        );
+    }
+
+    @Test
+    @DisplayName("Restaurant Review List Retrieval Test")
+    public void getRestaurantReviewTest() {
+        //given
+        when(restaurantRepository.findById(restaurant.getRestaurantId()))
+                .thenReturn(Optional.of(restaurant));
+        when(restaurantReviewRepository.findByRestaurantId(restaurant.getRestaurantId()))
+                .thenReturn(List.of(restaurantReview));
+
+        // when
+        RestaurantReviewModel restaurantReviewModel = restaurantService.getRestaurantReview(restaurant.getRestaurantId());
+
+        // then
+        assertNotNull(restaurantReviewModel);
+        assertNotNull(restaurantReviewModel.getStatistics());
+        assertNotNull(restaurantReviewModel.getTotalCount());
+        assertNotEquals(restaurantReviewModel.getReviews().size(), 0);
+
+        assertEquals(restaurantReviewModel.getStatistics().getKakao().getAverageScore(), restaurant.getKakaoAvgScore());
+        assertEquals(restaurantReviewModel.getStatistics().getKakao().getCount(), restaurant.getKakaoTotalReviewCount());
+        assertEquals(restaurantReviewModel.getStatistics().getNaver().getAverageScore(), restaurant.getNaverAvgScore());
+        assertEquals(restaurantReviewModel.getStatistics().getNaver().getCount(), restaurant.getNaverTotalReviewCount());
+
+        assertEquals(restaurantReviewModel.getReviews().getFirst().getRestaurantReviewId(), restaurantReview.getRestaurantReviewId());
+        assertEquals(restaurantReviewModel.getReviews().getFirst().getWriterName(), restaurantReview.getWriterName());
+        assertEquals(restaurantReviewModel.getReviews().getFirst().getScore(), restaurantReview.getScore());
+        assertEquals(restaurantReviewModel.getReviews().getFirst().getContent(), restaurantReview.getContent());
+        assertEquals(restaurantReviewModel.getReviews().getFirst().getWroteAt(), restaurantReview.getWroteAt());
+
+        assertEquals(restaurantReviewModel.getTotalCount(), restaurant.getTotalReviewCount());
+    }
+
+    @Test
+    @DisplayName("Exception Test for Non-Existent Restaurant Retrieval")
+    public void getRestaurantReview_WhenNotFound_ExceptionTest(){
+        // given
+        Long restaurantId = -1L;
+        when(restaurantRepository.findById(restaurantId))
+                .thenReturn(Optional.empty());
+
+        // when & then
+        assertThrows(EntityNotFoundException.class, () ->
+                restaurantService.getRestaurantReview(restaurantId)
+        );
+    }
+
+    @Test
+    @DisplayName("Exception Test for Non-Existent Review Retrieval")
+    public void getRestaurantReview_WhenNoReviews_ExceptionTest(){
+        //given
+        when(restaurantRepository.findById(restaurant.getRestaurantId()))
+                .thenReturn(Optional.of(restaurant));
+        when(restaurantReviewRepository.findByRestaurantId(restaurant.getRestaurantId()))
+                .thenReturn(List.of());
+
+        //when & then
+        assertThrows(EntityNotFoundException.class, () ->
+                restaurantService.getRestaurantReview(restaurant.getRestaurantId())
         );
     }
 }
