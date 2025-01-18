@@ -20,8 +20,7 @@ import java.math.BigDecimal;
 public class RestaurantMenu extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_menu_id")
-    private Long id;
+    private Long restaurantMenuId;
 
     @NotNull
     @Comment(value = "음식점 ID")

@@ -28,7 +28,7 @@ class RestaurantMenuTest {
         RestaurantMenu restaurantMenu = em.createQuery(
                 "SELECT rm FROM RestaurantMenu rm",
                 RestaurantMenu.class
-                ).getResultList().get(0);
+                ).getResultList().getFirst();
         System.out.println(restaurantMenu);
     }
 
@@ -44,7 +44,7 @@ class RestaurantMenuTest {
 
         restaurantMenuRepository.save(restaurantMenu);
 
-        RestaurantMenu findRestaurantMenu = restaurantMenuRepository.findById(restaurantMenu.getId()).get();
+        RestaurantMenu findRestaurantMenu = restaurantMenuRepository.findById(restaurantMenu.getRestaurantMenuId()).get();
         assertEquals(restaurantMenu, findRestaurantMenu);
     }
 }
