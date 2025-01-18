@@ -20,28 +20,25 @@ import org.hibernate.annotations.Comment;
 public class SelectedRestaurantRecommendation extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "selected_restaurant_recommendation_id")
     @Comment(value = "선택된 음식점 추천 ID")
-    private Long id;
+    private Long selectedRestaurantRecommendationId;
 
     @NotNull
-    @Column(name = "restaurant_recommendation_request_id")
     @Comment(value = "음식점 추천 요청 ID")
-    private Long requestId;
+    private Long restaurantRecommendationRequestId;
 
     @NotNull
-    @Column(name = "restaurant_recommendation_id")
     @Comment(value = "음식점 추천 ID")
-    private Long recommendationId;
+    private Long restaurantRecommendationId;
 
     @NotNull
     @Comment(value = "음식점 ID")
     private Long restaurantId;
 
     @Builder
-    public SelectedRestaurantRecommendation(Long requestId, Long recommendationId, Long restaurantId) {
-        this.requestId = requestId;
-        this.recommendationId = recommendationId;
+    public SelectedRestaurantRecommendation(Long restaurantRecommendationRequestId, Long restaurantRecommendationId, Long restaurantId) {
+        this.restaurantRecommendationRequestId = restaurantRecommendationRequestId;
+        this.restaurantRecommendationId = restaurantRecommendationId;
         this.restaurantId = restaurantId;
     }
 }

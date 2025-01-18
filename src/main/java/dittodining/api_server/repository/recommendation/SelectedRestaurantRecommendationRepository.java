@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SelectedRestaurantRecommendationRepository extends JpaRepository<SelectedRestaurantRecommendation, Long> {
 
-    List<SelectedRestaurantRecommendation> findByRequestId(Long requestId);
+    List<SelectedRestaurantRecommendation> findByRestaurantRecommendationRequestId(Long requestId);
 }

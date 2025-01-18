@@ -78,25 +78,25 @@ class RestaurantServiceTest {
     @DisplayName("레스토랑 정보 조회 성공 테스트")
     public void getRestaurantTest() {
         //given
-        when(restaurantRepository.findById(restaurant.getId()))
+        when(restaurantRepository.findById(restaurant.getRestaurantId()))
                 .thenReturn(Optional.of(restaurant));
-        when(restaurantImageRepository.findByRestaurantId(restaurant.getId()))
+        when(restaurantImageRepository.findByRestaurantId(restaurant.getRestaurantId()))
                 .thenReturn(List.of(restaurantImage));
 
         // when
-        RestaurantModel restaurantModel = restaurantService.getRestaurant(restaurant.getId());
+        RestaurantModel restaurantModel = restaurantService.getRestaurant(restaurant.getRestaurantId());
 
         // then
         assertNotNull(restaurantModel);
-        assertEquals(restaurant.getId(), restaurantModel.getRestaurantId());
+        assertEquals(restaurant.getRestaurantId(), restaurantModel.getRestaurantId());
         assertEquals(restaurant.getName(), restaurantModel.getRestaurantName());
         assertEquals(restaurant.getAddress(), restaurantModel.getRestaurantAddress());
         assertEquals(restaurant.getDescription(), restaurantModel.getDescription());
         assertEquals(1, restaurantModel.getRestaurantImageURLs().size());
         assertEquals(restaurantImage.getImageUrl(), restaurantModel.getRestaurantImageURLs().getFirst());
 
-        verify(restaurantRepository).findById(restaurant.getId());
-        verify(restaurantImageRepository).findByRestaurantId(restaurant.getId());
+        verify(restaurantRepository).findById(restaurant.getRestaurantId());
+        verify(restaurantImageRepository).findByRestaurantId(restaurant.getRestaurantId());
     }
 
     @Test
@@ -117,14 +117,14 @@ class RestaurantServiceTest {
     @DisplayName("레스토랑 이미지가 없는 경우 예외 발생 테스트")
     public void getRestaurant_WhenNoImages_ExceptionTest(){
         //given
-        when(restaurantRepository.findById(restaurant.getId()))
+        when(restaurantRepository.findById(restaurant.getRestaurantId()))
                 .thenReturn(Optional.of(restaurant));
-        when(restaurantImageRepository.findByRestaurantId(restaurant.getId()))
+        when(restaurantImageRepository.findByRestaurantId(restaurant.getRestaurantId()))
                 .thenReturn(List.of()); // empty list
 
         // when & then
         assertThrows(EntityNotFoundException.class, () ->
-                restaurantService.getRestaurant(restaurant.getId())
+                restaurantService.getRestaurant(restaurant.getRestaurantId())
         );
     }
 }
