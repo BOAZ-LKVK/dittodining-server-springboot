@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -79,11 +80,14 @@ class RestaurantServiceTest {
                 .kakaoTotalReviewCount(19L)
                 .totalReviewCount(863L)
                 .build();
+        // private field 값에 접근해서 값을 조작하는 java 가 제공하는 util
+        ReflectionTestUtils.setField(restaurant, "restaurantId", 1L);
 
         restaurantImage = RestaurantImage.builder()
                 .restaurantId(restaurant.getRestaurantId())
                 .imageUrl("https://pup-review-phinf.pstatic.net/MjAyNDA5MTBfMTMz/MDAxNzI1OTcxNTkyMDAz.rF3qTYh7tYVJsU6t4s_ZD27Px3syzXgQ7ikpuYVe4BMg.LcorDDlrQxLRKuSF4vElpzsiFuFJbu0riPicmWgsrg4g.JPEG/1000008970.jpg.jpg?type=w278_sharpen")
                 .build();
+        ReflectionTestUtils.setField(restaurantImage, "restaurantImageId", 1L);
 
         restaurantMenu = RestaurantMenu.builder()
                 .restaurantId(restaurant.getRestaurantId())
@@ -92,6 +96,7 @@ class RestaurantServiceTest {
                 .description("")
                 .imageUrl("https://search.pstatic.net/common/?autoRotate=true&quality=95&type=f320_320&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221230_132%2F1672359922686QGgfm_JPEG%2F%25C1%25A6%25B8%25F1_%25BE%25F8%25C0%25BD111.jpg")
                 .build();
+        ReflectionTestUtils.setField(restaurantMenu, "restaurantMenuId", 1L);
 
         restaurantReview = RestaurantReview.builder()
                 .restaurantId(restaurant.getRestaurantId())
@@ -100,6 +105,7 @@ class RestaurantServiceTest {
                 .content(null)
                 .wroteAt(LocalDateTime.of(2024, 2, 13, 0, 0, 0))
                 .build();
+        ReflectionTestUtils.setField(restaurantReview, "restaurantReviewId", 1L);
     }
 
     @Test
