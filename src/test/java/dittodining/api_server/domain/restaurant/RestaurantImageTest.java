@@ -36,7 +36,7 @@ class RestaurantImageTest {
         );
         restaurantImageRepository.save(restaurantImage);
 
-        RestaurantImage findRestaurantImage = restaurantImageRepository.findById(restaurantImage.getId()).get();
+        RestaurantImage findRestaurantImage = restaurantImageRepository.findById(restaurantImage.getRestaurantImageId()).get();
 
         assertEquals(restaurantImage, findRestaurantImage);
     }

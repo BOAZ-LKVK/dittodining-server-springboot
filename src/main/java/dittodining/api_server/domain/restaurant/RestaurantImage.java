@@ -19,8 +19,7 @@ public class RestaurantImage extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment(value = "음식점 이미지 ID")
-    @Column(name = "restaurant_image_id")
-    private Long id;
+    private Long restaurantImageId;
 
     @NotNull
     @Comment(value = "음식점 ID") // 왜 DDL 에는 PK를 넣지 않았지?
