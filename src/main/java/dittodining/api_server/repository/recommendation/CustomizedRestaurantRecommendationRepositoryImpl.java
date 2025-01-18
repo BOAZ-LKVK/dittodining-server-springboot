@@ -24,9 +24,9 @@ public class CustomizedRestaurantRecommendationRepositoryImpl implements Customi
     ) {
         return queryFactory
                 .selectFrom(restaurantRecommendation)
-                .where(cursorRecommendationId != null ? restaurantRecommendation.id.gt(cursorRecommendationId) : null)
-                .where(restaurantRecommendation.requestId.eq(requestId))
-                .orderBy(restaurantRecommendation.id.asc())
+                .where(cursorRecommendationId != null ? restaurantRecommendation.restaurantRecommendationId.gt(cursorRecommendationId) : null)
+                .where(restaurantRecommendation.restaurantRecommendationRequestId.eq(requestId))
+                .orderBy(restaurantRecommendation.restaurantRecommendationId.asc())
                 .limit(limit != null ? limit : 10)
                 .fetch();
     }

@@ -11,5 +11,5 @@ public interface RestaurantRecommendationRepository extends JpaRepository<Restau
 
     List<RestaurantRecommendation> findByRestaurantIdIn(List<Long> restaurantIds);
 
-    RestaurantRecommendation findTopByOrderByRequestIdDesc(Long requestId);
+    RestaurantRecommendation findTopByOrderByRestaurantRecommendationRequestIdDesc(Long requestId);
 }

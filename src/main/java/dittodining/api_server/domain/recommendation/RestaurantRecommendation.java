@@ -21,14 +21,12 @@ import java.math.BigDecimal;
 public class RestaurantRecommendation extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_recommendation_id")
     @Comment(value = "음식점 추천 ID")
-    private Long id;
+    private Long restaurantRecommendationId;
 
     @NotNull
-    @Column(name = "restaurant_recommendation_request_id")
     @Comment(value = "음식점 추천 요청 ID")
-    private Long requestId;
+    private Long restaurantRecommendationRequestId;
 
     @NotNull
     @Comment(value = "음식점 ID")
@@ -40,8 +38,12 @@ public class RestaurantRecommendation extends BaseTimeEntity {
     private BigDecimal distanceInMeters;
 
     @Builder
-    public RestaurantRecommendation(Long requestId, Long restaurantId, BigDecimal distanceInMeters) {
-        this.requestId = requestId;
+    public RestaurantRecommendation(
+            Long restaurantRecommendationRequestId,
+            Long restaurantId,
+            BigDecimal distanceInMeters
+    ) {
+        this.restaurantRecommendationRequestId = restaurantRecommendationRequestId;
         this.restaurantId = restaurantId;
         this.distanceInMeters = distanceInMeters;
     }
