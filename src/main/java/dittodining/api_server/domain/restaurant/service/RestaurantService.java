@@ -42,7 +42,7 @@ public class RestaurantService {
         this.restaurantImageRepository = restaurantImageRepository;
     }
 
-    public RestaurantModel getRestaurant(Long restaurantId) {
+    public RestaurantModel getRestaurant(long restaurantId) {
         Restaurant restaurant = restaurantRepository
                 .findById(restaurantId)
                 .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
@@ -73,7 +73,7 @@ public class RestaurantService {
         );
     }
 
-    public List<RestaurantMenuModel> getRestaurantMenuList(Long restaurantId) {
+    public List<RestaurantMenuModel> getRestaurantMenuList(long restaurantId) {
         List<RestaurantMenu> restaurantMenuList = restaurantMenuRepository.findByRestaurantId(restaurantId);
         if (restaurantMenuList.isEmpty()) {
             throw new EntityNotFoundException("Restaurant Menu not found");
@@ -93,7 +93,7 @@ public class RestaurantService {
         return restaurantMenuModels;
     }
 
-    public RestaurantReviewModel getRestaurantReview(Long restaurantId) {
+    public RestaurantReviewModel getRestaurantReview(long restaurantId) {
         Restaurant restaurant = restaurantRepository
                 .findById(restaurantId)
                 .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class RestaurantReviewItem {
-    private Long restaurantReviewId;
+    private long restaurantReviewId;
     private String writerName;
     private BigDecimal score;
     private String content;

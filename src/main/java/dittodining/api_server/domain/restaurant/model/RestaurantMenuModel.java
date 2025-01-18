@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Builder
 @ToString
 public class RestaurantMenuModel {
-    private Long restaurantMenuId;
+    private long restaurantMenuId;
     private String imageURL;
     private String name;
     private BigDecimal price;

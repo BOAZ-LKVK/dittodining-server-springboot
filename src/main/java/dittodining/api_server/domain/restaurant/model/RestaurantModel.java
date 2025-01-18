@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 @Builder
 public class RestaurantModel {
-    private Long restaurantId;
+    private long restaurantId;
     private String restaurantName;
     private String restaurantAddress;
     private String description;

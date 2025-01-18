@@ -14,5 +14,5 @@ import java.util.List;
 public class RestaurantReviewModel {
     private RestaurantReviewStatistics statistics;
     private List<RestaurantReviewItem> reviews;
-    private Long totalCount;
+    private long totalCount;
 }

@@ -13,5 +13,5 @@ import java.math.BigDecimal;
 @ToString
 public class RestaurantReviewKakaoStatistics {
     private BigDecimal averageScore;
-    private Long count;
+    private long count;
 }
